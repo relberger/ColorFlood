@@ -7,6 +7,8 @@ import ColorFlood.Cell;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static ColorFlood.Properties.*;
 
@@ -16,8 +18,10 @@ public class BoardView extends JComponent {
     private String difficulty;
     private double boardColWidth;
     private double boardRowHeight;
-
     private ArrayList<JButton> cellButtons;
+    private Timer gameTimer;
+    private int seconds;
+    public String timeRemaining;
 
     public BoardView(String difficulty) {
 
@@ -42,6 +46,8 @@ public class BoardView extends JComponent {
         super.paintComponent(graphics);
 
         Graphics2D g = (Graphics2D) graphics;
+
+        createTimer();
 
         setUpColRowSizes();
 
@@ -69,8 +75,32 @@ public class BoardView extends JComponent {
                         (int) (boardColWidth / 1.5),
                         10,
                         10);
-
             }
         }
+    }
+
+    public void createTimer()
+    {
+        gameTimer = new Timer();
+        gameTimer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                getTimeRemaining();
+            }
+        }, 0, 1000);
+
+        timeRemaining = Integer.toString(getTimeRemaining());
+    }
+
+    private int getTimeRemaining()
+    {
+        seconds = 60;
+        if (seconds == 1)
+        {
+            gameTimer.cancel();
+        }
+        return --seconds;
     }
 }

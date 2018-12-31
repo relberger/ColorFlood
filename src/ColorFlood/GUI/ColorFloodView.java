@@ -3,16 +3,19 @@ package ColorFlood.GUI;
 import ColorFlood.Properties;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ColorFloodView extends JFrame {
     private JPanel panel;
     private JPanel timerPanel;
     private BoardView boardView;
     private JPanel gameControls;
+    private JLabel timeRemainingLabel;
+    private Timer gameTimer;
+    private int seconds;
 
     private JButton buttonRed = new JButton();
     private JButton buttonCyan = new JButton();
@@ -55,6 +58,11 @@ public class ColorFloodView extends JFrame {
 
     private void setUpTimerPanel() {
         timerPanel = new JPanel();
+        timeRemainingLabel = new JLabel();
+        timeRemainingLabel.setText(boardView.timeRemaining);
+        timeRemainingLabel.setForeground(Color.WHITE);
+        timeRemainingLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+        timerPanel.add(timeRemainingLabel);
         timerPanel.setPreferredSize(Properties.TIMER_PANEL_SIZE);
         timerPanel.setBackground(Properties.BACKGROUND_COLOR);
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
@@ -66,6 +74,29 @@ public class ColorFloodView extends JFrame {
         boardView.setPreferredSize(Properties.BOARD_VIEW_SIZE);
         boardView.setBorder(new EmptyBorder(20, 10, 0, 0));
     }
+
+    /*private void createTimer()
+    {
+        gameTimer = new Timer();
+        gameTimer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                timeRemainingLabel.setText(Integer.toString(getTimeRemaining()));
+            }
+        }, 1000, 1000);
+    }
+
+    private int getTimeRemaining()
+    {
+        seconds = 60;
+        if (seconds == 1)
+        {
+            gameTimer.cancel();
+        }
+        return --seconds;
+    }*/
 
     private String preGameQuery() {
 

@@ -2,17 +2,17 @@ package ColorFlood;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Board {
 
     public Cell[][] gameBoard;
-
     public final int GAME_ROWS;
     public final int GAME_COLUMNS;
-
     public Color selectedColor;
-
     private int activeCells;
+    private int time = 60;
 
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
@@ -109,9 +109,37 @@ public class Board {
         return (GAME_COLUMNS * GAME_ROWS) == activeCells || timesUp();
     }
 
+    public int getTime()
+    {
+        return time;
+    }
+
+    /*private void timer()
+    {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                System.out.println(timeRemaining());
+            }
+        }, 1000, 1000);
+    }
+
+    private String timeRemaining()
+    {
+
+    }*/
+
     public boolean timesUp() {
-        //if timer = 0
-        return true;
-        //else return false (as long as timer isn't up
+        if (time == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
