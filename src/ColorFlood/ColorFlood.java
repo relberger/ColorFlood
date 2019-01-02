@@ -56,6 +56,7 @@ public class ColorFlood extends JFrame {
         setSize(Properties.MAIN_PANEL_WIDTH, Properties.MAIN_PANEL_HEIGHT);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
