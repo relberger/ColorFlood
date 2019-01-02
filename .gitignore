@@ -5,3 +5,6 @@ ColorFlood.iml
 target/
 vcs.xml
 workspace.xml
+/out/
+src.ColorFlood.iml
+
