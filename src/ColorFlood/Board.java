@@ -68,6 +68,7 @@ public class Board extends JPanel {
     public void setSelectedColor(Color selectedColor) {
         this.selectedColor = selectedColor;
         flood();
+        repaint();
     }
 
 
@@ -133,13 +134,11 @@ public class Board extends JPanel {
                 }
             }
         }
-        repaint();
     }
 
     public void flood() {
         activateNeighbors();
         colorActiveCells(selectedColor);
-        System.out.println(activeCells + selectedColor.toString());
     }
 
     public int getActiveCells() {

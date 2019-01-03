@@ -121,8 +121,6 @@ public class ColorFlood extends JFrame {
                 int col = clickedCell.getCol();
                 int row = clickedCell.getRow();
 
-                System.out.println("first click happened");
-
                 board.activateFirstCell(row, col);
 
                 removeFirstClickListeners();
@@ -222,37 +220,31 @@ public class ColorFlood extends JFrame {
     }
 
     private void redButtonClicked(ActionEvent actionEvent) {
-        System.out.println("red clicked");
         board.setSelectedColor(Properties.RED);
         checkGameWon();
     }
 
     private void cyanButtonClicked(ActionEvent actionEvent) {
-        System.out.println("cyan clicked");
         board.setSelectedColor(Properties.CYAN);
         checkGameWon();
     }
 
     private void yellowButtonClicked(ActionEvent actionEvent) {
-        System.out.println("yellow clicked");
         board.setSelectedColor(Properties.YELLOW);
         checkGameWon();
     }
 
     private void greenButtonClicked(ActionEvent actionEvent) {
-        System.out.println("green clicked");
         board.setSelectedColor(Properties.GREEN);
         checkGameWon();
     }
 
     private void blueButtonClicked(ActionEvent actionEvent) {
-        System.out.println("blue clicked");
         board.setSelectedColor(Properties.BLUE);
         checkGameWon();
     }
 
     private void magentaButtonClicked(ActionEvent actionEvent) {
-        System.out.println("magenta clicked");
         board.setSelectedColor(Properties.MAGENTA);
         checkGameWon();
     }
@@ -300,7 +292,6 @@ public class ColorFlood extends JFrame {
 
     private void checkGameWon(){
         if((board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells()) {
-            System.out.println("game won");
             gameWonDialogue();
         }
     }
@@ -313,6 +304,7 @@ public class ColorFlood extends JFrame {
 
     private void gameWonDialogue() {
         removeAll();
+        gameTimer.timer.cancel();
         int userAnswer;
 
         userAnswer = JOptionPane.showConfirmDialog(null,
