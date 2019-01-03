@@ -253,7 +253,7 @@ public class ColorFlood extends JFrame {
     }
 
     public class Countdown {
-        private final int INITIAL_TIME = 70_000;
+        private final int INITIAL_TIME = 60_000;
         private int remainingTime;
         private java.util.Timer timer;
 
