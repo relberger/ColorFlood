@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ public class ColorFlood extends JFrame {
     private Board board;
     private JPanel controlsPanel;
     private Countdown gameTimer;
-    private String time;
     private JLabel clock;
 
     private MouseListener firstClickListener;
@@ -57,7 +55,6 @@ public class ColorFlood extends JFrame {
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Properties.BACKGROUND_COLOR);
-
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
@@ -68,7 +65,7 @@ public class ColorFlood extends JFrame {
         timerPanel.setBorder(new EmptyBorder(10, 0, 50, 0));
 
         gameTimer = new Countdown();
-        time = gameTimer.getRemainingTimeString();
+        String time = gameTimer.getRemainingTimeString();
         clock = new JLabel(time);
 
         clock.setForeground(Color.white);
@@ -168,6 +165,8 @@ public class ColorFlood extends JFrame {
         controlsPanel.setLayout(new GridLayout(1, 0));
         controlsPanel.setBackground(Properties.BACKGROUND_COLOR);
         controlsPanel.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
+
+        controlsPanel.setBorder(new EmptyBorder(0, 20, 0, 20));
     }
 
     private void setUpControlColorButtons() {
@@ -179,10 +178,8 @@ public class ColorFlood extends JFrame {
             button.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             button.setIcon(Properties.createImageIcon(
                     Properties.COLORS[colorIndex],
-                    Properties.COLOR_BUTTON_WIDTH,
+                    Properties.COLOR_BUTTON_WIDTH ,
                     Properties.COLOR_BUTTON_HEIGHT));
-
-            button.setBorder(new EmptyBorder(0, 50, 0, 50));
 
             controlsPanel.add(button);
             colorIndex++;
@@ -210,41 +207,41 @@ public class ColorFlood extends JFrame {
         colorButtons.add(buttonMagenta);
     }
 
-    public void addColorControlButtonsListeners() {
-        buttonRed.addActionListener(this::redButtonClicked);
-        buttonCyan.addActionListener(this::cyanButtonClicked);
-        buttonYellow.addActionListener(this::yellowButtonClicked);
-        buttonGreen.addActionListener(this::greenButtonClicked);
-        buttonBlue.addActionListener(this::blueButtonClicked);
-        buttonMagenta.addActionListener(this::magentaButtonClicked);
+    private void addColorControlButtonsListeners() {
+        buttonRed.addActionListener(actionEvent -> redButtonClicked());
+        buttonCyan.addActionListener(actionEvent -> cyanButtonClicked());
+        buttonYellow.addActionListener(actionEvent -> yellowButtonClicked());
+        buttonGreen.addActionListener(actionEvent -> greenButtonClicked());
+        buttonBlue.addActionListener(actionEvent -> blueButtonClicked());
+        buttonMagenta.addActionListener(actionEvent -> magentaButtonClicked());
     }
 
-    private void redButtonClicked(ActionEvent actionEvent) {
+    private void redButtonClicked() {
         board.setSelectedColor(Properties.RED);
         checkGameWon();
     }
 
-    private void cyanButtonClicked(ActionEvent actionEvent) {
+    private void cyanButtonClicked() {
         board.setSelectedColor(Properties.CYAN);
         checkGameWon();
     }
 
-    private void yellowButtonClicked(ActionEvent actionEvent) {
+    private void yellowButtonClicked() {
         board.setSelectedColor(Properties.YELLOW);
         checkGameWon();
     }
 
-    private void greenButtonClicked(ActionEvent actionEvent) {
+    private void greenButtonClicked() {
         board.setSelectedColor(Properties.GREEN);
         checkGameWon();
     }
 
-    private void blueButtonClicked(ActionEvent actionEvent) {
+    private void blueButtonClicked() {
         board.setSelectedColor(Properties.BLUE);
         checkGameWon();
     }
 
-    private void magentaButtonClicked(ActionEvent actionEvent) {
+    private void magentaButtonClicked() {
         board.setSelectedColor(Properties.MAGENTA);
         checkGameWon();
     }
@@ -256,31 +253,30 @@ public class ColorFlood extends JFrame {
     }
 
     public class Countdown {
-        private final int INITIAL_TIME = 70_000;
         private int remainingTime;
         private java.util.Timer timer;
 
         Countdown() {
             this.timer = new Timer();
-            remainingTime = INITIAL_TIME;
+            remainingTime = Properties.INITIAL_TIME;
         }
 
         void runTimer() {
-                TimerTask decrement = new TimerTask() {
-                    @Override
-                    public void run() {
-                        if(remainingTime >= 0){
+            TimerTask decrement = new TimerTask() {
+                @Override
+                public void run() {
+                    if (remainingTime >= 0) {
                         clock.setText(getRemainingTimeString());
                         remainingTime = remainingTime - 1000;
                         board.setTime(remainingTime);
                         checkTimesUp();
-                    }else {
-                            timer.cancel();
-                            checkTimesUp();
-                        }
+                    } else {
+                        timer.cancel();
+                        checkTimesUp();
                     }
-                };
-                timer.schedule(decrement, 50, 1000);
+                }
+            };
+            timer.schedule(decrement, 50, 1000);
         }
 
         String getRemainingTimeString() {
@@ -290,20 +286,19 @@ public class ColorFlood extends JFrame {
         }
     }
 
-    private void checkGameWon(){
-        if((board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells()) {
+    private void checkGameWon() {
+        if ((board.GAME_COLUMNS * board.GAME_ROWS) == board.getActiveCells()) {
             gameWonDialogue();
         }
     }
 
-    public void checkTimesUp() {
-        if(board.getTime() == 0) {
+    private void checkTimesUp() {
+        if (board.getTime() < 0) {
             timesUpDialogue();
         }
     }
 
     private void gameWonDialogue() {
-        removeAll();
         gameTimer.timer.cancel();
         int userAnswer;
 
@@ -312,15 +307,16 @@ public class ColorFlood extends JFrame {
                 "I'm drowning in color!",
                 JOptionPane.YES_NO_OPTION);
 
-        if(userAnswer == JOptionPane.NO_OPTION) {
+        if (userAnswer == JOptionPane.NO_OPTION) {
             JOptionPane.showMessageDialog(null, "Thank you for playing!");
             System.exit(0);
-        } else if(userAnswer == JOptionPane.YES_OPTION) {
+        } else if (userAnswer == JOptionPane.YES_OPTION) {
             resetGame();
         }
     }
 
     private void timesUpDialogue() {
+        gameTimer.timer.cancel();
         int userAnswer;
 
         userAnswer = JOptionPane.showConfirmDialog(null,
@@ -328,10 +324,10 @@ public class ColorFlood extends JFrame {
                 "Time is not your friend.",
                 JOptionPane.YES_NO_OPTION);
 
-        if(userAnswer == JOptionPane.NO_OPTION) {
+        if (userAnswer == JOptionPane.NO_OPTION) {
             JOptionPane.showMessageDialog(this, "Thanks for trying!");
             System.exit(0);
-        } else if(userAnswer == JOptionPane.YES_OPTION) {
+        } else if (userAnswer == JOptionPane.YES_OPTION) {
             resetGame();
         }
     }
@@ -341,7 +337,7 @@ public class ColorFlood extends JFrame {
         new ColorFlood().setVisible(true);
     }
 
-    public static void main (String[]args){
+    public static void main(String[] args) {
         new ColorFlood().setVisible(true);
     }
 }

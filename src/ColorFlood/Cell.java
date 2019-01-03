@@ -55,15 +55,15 @@ public class Cell extends JPanel{
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    void setActive() {
+        this.active = true;
     }
 
     public Color getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    void setColor(Color color) {
         this.color = color;
     }
 }

@@ -1,11 +1,11 @@
 package ColorFlood;
 
-public class BoardBuilder {
+class BoardBuilder {
 
     private Board board;
     private String difficulty;
 
-    public BoardBuilder(String difficulty) {
+    BoardBuilder(String difficulty) {
         this.difficulty = difficulty;
 
         initializeBoard();
@@ -23,7 +23,7 @@ public class BoardBuilder {
         }
     }
 
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 }

@@ -8,12 +8,11 @@ import java.util.Random;
 public class Board extends JPanel {
 
     public Cell[][] gameBoard;
-    public final int GAME_ROWS;
-    public final int GAME_COLUMNS;
-    public Color selectedColor;
+    final int GAME_ROWS;
+    final int GAME_COLUMNS;
+    private Color selectedColor;
     private int activeCells;
     private int time;
-    private Cell firstCell;
 
     /**
      * The constructor's fields are meant to take one of three set options depending on the user's choice of level.
@@ -61,7 +60,7 @@ public class Board extends JPanel {
         }
     }
 
-    public void setTime(int time) {
+    void setTime(int time) {
         this.time = time;
     }
 
@@ -97,11 +96,11 @@ public class Board extends JPanel {
         setCellActive(cell.getRow(), cell.getCol() + 1);
     }
 
-    public void setCellActive(int row, int col) {
+    private void setCellActive(int row, int col) {
         if (boardContains(row, col)) {
             if (!gameBoard[row][col].isActive()) {
                 if (gameBoard[row][col].getColor() == selectedColor) {
-                    gameBoard[row][col].setActive(true);
+                    gameBoard[row][col].setActive();
                     activateNeighbors();
                     activeCells++;
                 }
@@ -113,9 +112,9 @@ public class Board extends JPanel {
     {
         if (boardContains(row, col))
         {
-            gameBoard[row][col].setActive(true);
+            gameBoard[row][col].setActive();
             activeCells++;
-            firstCell = gameBoard[row][col];
+            Cell firstCell = gameBoard[row][col];
             setSelectedColor(firstCell.getColor());
         }
     }
@@ -136,16 +135,16 @@ public class Board extends JPanel {
         }
     }
 
-    public void flood() {
+    private void flood() {
         activateNeighbors();
         colorActiveCells(selectedColor);
     }
 
-    public int getActiveCells() {
+    int getActiveCells() {
         return activeCells;
     }
 
-    public int getTime() {
+    int getTime() {
         return time;
     }
 }
