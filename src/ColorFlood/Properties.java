@@ -40,7 +40,7 @@ class Properties {
     static final Dimension TIMER_PANEL_SIZE = new Dimension(TIMER_PANEL_WIDTH, TIMER_PANEL_HEIGHT);
 
     static final int COLOR_BUTTON_HEIGHT = 30;
-    static final int COLOR_BUTTON_WIDTH = 65;
+    static final int COLOR_BUTTON_WIDTH = 70;
     static final Dimension COLOR_BUTTON_SIZE = new Dimension(COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT);
 
     static ImageIcon createImageIcon(Color color, int width, int height) {
