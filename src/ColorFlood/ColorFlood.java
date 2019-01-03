@@ -253,13 +253,12 @@ public class ColorFlood extends JFrame {
     }
 
     public class Countdown {
-        private final int INITIAL_TIME = 60_000;
         private int remainingTime;
         private java.util.Timer timer;
 
         Countdown() {
             this.timer = new Timer();
-            remainingTime = INITIAL_TIME;
+            remainingTime = Properties.INITIAL_TIME;
         }
 
         void runTimer() {
@@ -317,6 +316,7 @@ public class ColorFlood extends JFrame {
     }
 
     private void timesUpDialogue() {
+        gameTimer.timer.cancel();
         int userAnswer;
 
         userAnswer = JOptionPane.showConfirmDialog(null,
