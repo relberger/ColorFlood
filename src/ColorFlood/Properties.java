@@ -50,4 +50,6 @@ class Properties {
         graphics.fillRoundRect( 0, 0, width, height, 10, 10);
         return new ImageIcon(image);
     }
+
+    static final int INITIAL_TIME = 70_000;
 }
