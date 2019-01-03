@@ -43,13 +43,5 @@ class Properties {
     static final int COLOR_BUTTON_WIDTH = 70;
     static final Dimension COLOR_BUTTON_SIZE = new Dimension(COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT);
 
-    static ImageIcon createImageIcon(Color color, int width, int height) {
-        BufferedImage image = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
-        graphics.setPaint(color);
-        graphics.fillRoundRect( 0, 0, width, height, 10, 10);
-        return new ImageIcon(image);
-    }
-
     static final int INITIAL_TIME = 70_000;
 }

@@ -6,6 +6,7 @@ import java.awt.*;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -176,7 +177,7 @@ public class ColorFlood extends JFrame {
         for (JButton button : colorButtons) {
 
             button.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
-            button.setIcon(Properties.createImageIcon(
+            button.setIcon(createImageIcon(
                     Properties.COLORS[colorIndex],
                     Properties.COLOR_BUTTON_WIDTH ,
                     Properties.COLOR_BUTTON_HEIGHT));
@@ -188,6 +189,14 @@ public class ColorFlood extends JFrame {
         addColorControlButtonsListeners();
 
         toggleColorControlButtons(false);
+    }
+
+    private ImageIcon createImageIcon(Color color, int width, int height) {
+        BufferedImage image = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = image.createGraphics();
+        graphics.setPaint(color);
+        graphics.fillRoundRect( 0, 0, width, height, 10, 10);
+        return new ImageIcon(image);
     }
 
     private void setUpColorButtonsList() {
