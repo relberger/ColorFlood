@@ -206,10 +206,8 @@ public class ColorFlood extends JFrame {
     }
 
 
-    private void toggleColorControlButtons(Boolean clickable) {
-        for (JButton button : colorButtons) {
-            button.setEnabled(clickable);
-        }
+    private void toggleColorControlButtons(boolean clickable) {
+        colorButtons.forEach(button -> button.setEnabled(clickable));
     }
 
     public class Countdown {
