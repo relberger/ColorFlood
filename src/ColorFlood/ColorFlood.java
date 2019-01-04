@@ -171,94 +171,43 @@ public class ColorFlood extends JFrame {
     }
 
     private void setUpControlColorButtons() {
-        setUpColorButtonsList();
 
-        int colorIndex = 0;
-        for (JButton button : colorButtons) {
+        colorButtons = new ArrayList<>();
 
+        for (Color color : Properties.COLORS) {
+            JButton button = new JButton();
             button.setPreferredSize(Properties.COLOR_BUTTON_SIZE);
             button.setIcon(createImageIcon(
-                    Properties.COLORS[colorIndex],
-                    Properties.COLOR_BUTTON_WIDTH ,
+                    color,
+                    Properties.COLOR_BUTTON_WIDTH,
                     Properties.COLOR_BUTTON_HEIGHT));
 
-            controlsPanel.add(button);
-            colorIndex++;
-        }
+            button.addActionListener(actionEvent -> buttonClicked(color));
 
-        addColorControlButtonsListeners();
+            controlsPanel.add(button);
+            colorButtons.add(button);
+        }
 
         toggleColorControlButtons(false);
     }
 
+    private void buttonClicked(Color color) {
+        board.setSelectedColor(color);
+        checkGameWon();
+    }
+
+
     private ImageIcon createImageIcon(Color color, int width, int height) {
-        BufferedImage image = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = image.createGraphics();
         graphics.setPaint(color);
-        graphics.fillRoundRect( 0, 0, width, height, 10, 10);
+        graphics.fillRoundRect(0, 0, width, height, 10, 10);
         return new ImageIcon(image);
     }
 
-    private void setUpColorButtonsList() {
-        buttonRed = new JButton();
-        buttonCyan = new JButton();
-        buttonYellow = new JButton();
-        buttonGreen = new JButton();
-        buttonBlue = new JButton();
-        buttonMagenta = new JButton();
 
-        colorButtons = new ArrayList<>();
-        colorButtons.add(buttonRed);
-        colorButtons.add(buttonCyan);
-        colorButtons.add(buttonYellow);
-        colorButtons.add(buttonGreen);
-        colorButtons.add(buttonBlue);
-        colorButtons.add(buttonMagenta);
-    }
-
-    private void addColorControlButtonsListeners() {
-        buttonRed.addActionListener(actionEvent -> redButtonClicked());
-        buttonCyan.addActionListener(actionEvent -> cyanButtonClicked());
-        buttonYellow.addActionListener(actionEvent -> yellowButtonClicked());
-        buttonGreen.addActionListener(actionEvent -> greenButtonClicked());
-        buttonBlue.addActionListener(actionEvent -> blueButtonClicked());
-        buttonMagenta.addActionListener(actionEvent -> magentaButtonClicked());
-    }
-
-    private void redButtonClicked() {
-        board.setSelectedColor(Properties.RED);
-        checkGameWon();
-    }
-
-    private void cyanButtonClicked() {
-        board.setSelectedColor(Properties.CYAN);
-        checkGameWon();
-    }
-
-    private void yellowButtonClicked() {
-        board.setSelectedColor(Properties.YELLOW);
-        checkGameWon();
-    }
-
-    private void greenButtonClicked() {
-        board.setSelectedColor(Properties.GREEN);
-        checkGameWon();
-    }
-
-    private void blueButtonClicked() {
-        board.setSelectedColor(Properties.BLUE);
-        checkGameWon();
-    }
-
-    private void magentaButtonClicked() {
-        board.setSelectedColor(Properties.MAGENTA);
-        checkGameWon();
-    }
-
-    private void toggleColorControlButtons(Boolean clickable) {
-        for (JButton button : colorButtons) {
-            button.setEnabled(clickable);
-        }
+    private void toggleColorControlButtons(boolean clickable) {
+        colorButtons.forEach(button -> button.setEnabled(clickable));
     }
 
     public class Countdown {

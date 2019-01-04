@@ -101,7 +101,7 @@ public class Board extends JPanel {
             if (!gameBoard[row][col].isActive()) {
                 if (gameBoard[row][col].getColor() == selectedColor) {
                     gameBoard[row][col].setActive();
-                    activateNeighbors();
+                    neighborsToActivate(gameBoard[row][col]);
                     activeCells++;
                 }
             }
